@@ -1,73 +1,59 @@
 <template>
   <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        nuxt-blog
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+    <div class="wrapper pt-4">
+      <h1 class="d-flex justify-content-center">Posts</h1>
+      <ul>
+        <li v-for="post of posts" :key="post.id" class="mb-3 posts">
+          <h2 class="post-title">{{ post.title }}</h2>
+          <p class="text-secondary">{{ post.body }}</p>
+          <a class="text-light bg-primary p-2 post-link" href="#" @click.prevent="openPost(post)">Open this post</a>
+          <hr>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  async asyncData({$axios}) {
+    const posts = await $axios.$get('https://jsonplaceholder.typicode.com/posts/')
+    return {posts}
+  },
+  data: () => ({
+    posts: []
+  }),
+  methods: {
+    openPost(post) {
+      this.$router.push('/' + post.id)
+    }
+  }
+}
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+ul {
+  padding: 0 2rem;
 }
 
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+li {
+  list-style: none;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+a {
+  text-decoration: none;
 }
 
-.links {
-  padding-top: 15px;
+.post-title {
+  color: #303030;
+}
+
+.post-link {
+  transition: background-color .2s;
+}
+
+.post-link:hover {
+  background-color: #0d92ff !important;
+  
 }
 </style>
