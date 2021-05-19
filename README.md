@@ -1,5 +1,7 @@
 # nuxt-blog
 
+Link to this project: https://nuxt-blog-a64b8.web.app/
+
 ## Build Setup
 
 ```bash
