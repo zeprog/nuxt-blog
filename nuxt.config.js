@@ -20,6 +20,8 @@ export default {
     '@/node_modules/bootstrap/dist/css/bootstrap.min.css'
   ],
 
+  
+
   router: {
     base: '/posts/'
   },
